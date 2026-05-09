@@ -1,21 +1,78 @@
-.hero{
-    margin-top: 130px;
-    margin-bottom: 70px;
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    overflow: hidden;
+    background-color: #ffffff; /* White background */
 }
 
-.text-primary{
-    font-size: 2.5rem;
-    font-weight: 500;
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
 
-    span{
-        color: var(--secondary-color2);
-        font-weight: 700;
+.hero-content {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+    padding: 0 20px;
+}
+
+.text-primary {
+    font-family: var(--font-ubuntu), sans-serif;
+    font-size: 4.2rem; 
+    font-weight: 800; 
+    color: #141414;
+    line-height: 1.0;
+    letter-spacing: -0.04em; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.justify-center { justify-content: center; }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.gap-x-\[0\.5rem\] { column-gap: 0.5rem; }
+
+/* We target the span specifically if we want to highlight 'MOROCCO' */
+/* However, since BlurText generates generic spans, we might need to be more specific or modify the component */
+/* For now, let's just make sure the general style is correct */
+
+.text-highlight span {
+    background: linear-gradient(135deg, #8d6e63 0%, #5d4037 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.text-accent-italic span {
+    font-family: var(--font-playfair), serif; /* Using Playfair for that classy contrast */
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.2em;
+    color: #141414;
+    letter-spacing: 0.2em;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 500px;
     }
-}
-
-@media (max-width: 768px){
-    .text-primary{
-        font-size: 2.2rem;
+    .text-primary {
+        font-size: 1.8rem;
+        gap: 0.5rem;
     }
 }

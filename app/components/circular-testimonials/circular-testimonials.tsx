@@ -53,12 +53,12 @@ export const CircularTestimonials = ({
   fontSizes = {},
 }: CircularTestimonialsProps) => {
   // Color & font config
-  const colorName = colors.name ?? "#000";
-  const colorDesignation = colors.designation ?? "#6b7280";
-  const colorTestimony = colors.testimony ?? "#4b5563";
-  const colorArrowBg = colors.arrowBackground ?? "#141414";
-  const colorArrowFg = colors.arrowForeground ?? "#f1f1f7";
-  const colorArrowHoverBg = colors.arrowHoverBackground ?? "#00a6fb";
+  const colorName = colors.name ?? "#000000";
+  const colorDesignation = colors.designation ?? "#666666";
+  const colorTestimony = colors.testimony ?? "#333333";
+  const colorArrowBg = colors.arrowBackground ?? "#000000";
+  const colorArrowFg = colors.arrowForeground ?? "#ffffff";
+  const colorArrowHoverBg = colors.arrowHoverBackground ?? "#333333";
   const fontSizeName = fontSizes.name ?? "1.5rem";
   const fontSizeDesignation = fontSizes.designation ?? "0.925rem";
   const fontSizeQuote = fontSizes.quote ?? "1.125rem";
@@ -68,6 +68,7 @@ export const CircularTestimonials = ({
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
   const [containerWidth, setContainerWidth] = useState(1200);
+  const [isMounted, setIsMounted] = useState(false);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -78,8 +79,9 @@ export const CircularTestimonials = ({
     [activeIndex, testimonials]
   );
 
-  // Responsive gap calculation
+  // Handle Mounting
   useEffect(() => {
+    setIsMounted(true);
     function handleResize() {
       if (imageContainerRef.current) {
         setContainerWidth(imageContainerRef.current.offsetWidth);
@@ -175,11 +177,15 @@ export const CircularTestimonials = ({
     exit: { opacity: 0, y: -20 },
   };
 
+  if (!isMounted) {
+    return <div className="testimonial-container" style={{ minHeight: '400px' }} />;
+  }
+
   return (
-    <div className="testimonial-container">
-      <div className="testimonial-grid">
+    <div className="testimonial-container" suppressHydrationWarning>
+      <div className="testimonial-grid" suppressHydrationWarning>
         {/* Images */}
-        <div className="image-container" ref={imageContainerRef}>
+        <div className="image-container" ref={imageContainerRef} suppressHydrationWarning>
           {testimonials.map((testimonial, index) => (
             <img
               key={testimonial.src}
@@ -192,7 +198,7 @@ export const CircularTestimonials = ({
           ))}
         </div>
         {/* Content */}
-        <div className="testimonial-content">
+        <div className="testimonial-content" suppressHydrationWarning>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -244,7 +250,7 @@ export const CircularTestimonials = ({
               </motion.p>
             </motion.div>
           </AnimatePresence>
-          <div className="arrow-buttons">
+          <div className="arrow-buttons" suppressHydrationWarning>
             <button
               className="arrow-button prev-button"
               onClick={handlePrev}
